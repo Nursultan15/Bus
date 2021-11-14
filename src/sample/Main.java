@@ -11,6 +11,11 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 public class Main extends Application {
     Car car;
     int velX = 10;
@@ -18,7 +23,19 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-        Image image= new Image("file:///C:\\Users\\Nursultan\\Downloads\\car5.png");
+        StringBuilder str = new StringBuilder();
+        try {
+            InputStream input = Main.class.getResourceAsStream("path.txt");
+            BufferedReader filereader = new BufferedReader(new InputStreamReader(input));
+            int data = filereader.read();
+            while (data != -1){
+                str.append((char) data);
+                data = filereader.read();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Image image= new Image(str.toString());
         Group root = new Group();
         Scene scene = new Scene(root, Color.rgb(22,232,150));
         root.setLayoutX(0);
